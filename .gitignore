@@ -1,0 +1,6 @@
+.env
+backend/market/.env
+__pycache__/
+*.py[cod]
+db.sqlite3
+
