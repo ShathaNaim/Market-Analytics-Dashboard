@@ -17,6 +17,9 @@ from .services import (
 # Create your views here.
 
 
+
+
+
 class AssetListView(generics.ListAPIView):
     queryset = Asset.objects.all()
     serializer_class = AssetSerializer
@@ -49,10 +52,14 @@ class PriceHistoryView(APIView):
         queryset = asset.prices.all()
 
         days = request.query_params.get("days")
+        currency = request.query_params.get("currency")
 
         if days:
             start_date = timezone.now().date() - timedelta(days=int(days))
             queryset = queryset.filter(date__gte=start_date)
+
+        if currency:
+            queryset = queryset.filter(currency=currency.strip().upper())
 
         queryset = queryset.order_by("date")
 
@@ -160,3 +167,43 @@ class RefreshMarketDataView(APIView):
             },
             status=status.HTTP_200_OK
         )
+
+class BackfillMarketHistoryView(APIView):
+    def post(self, request, format=None):
+        currency = request.data.get("currency", "USD")
+        symbols = request.data.get("symbols")
+        days = request.data.get("days", 29)
+
+        if symbols is not None and not isinstance(symbols, list):
+            return Response(
+                {"error": "symbols must be a list."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            result = MetalPriceService().backfill_historical_prices(
+                currency=currency,
+                symbols=symbols,
+                days=days,
+            )
+        except ValueError:
+            return Response(
+                {"error": "days must be a valid number."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        except MetalPriceRateLimitError as exc:
+            return Response({"error": str(exc)}, status=status.HTTP_429_TOO_MANY_REQUESTS)
+        except MetalPriceTimeoutError as exc:
+            return Response({"error": str(exc)}, status=status.HTTP_504_GATEWAY_TIMEOUT)
+        except MetalPriceAPIError as exc:
+            return Response({"error": str(exc)}, status=status.HTTP_502_BAD_GATEWAY)
+
+        return Response({
+            "message": "Historical prices backfilled.",
+            "created": result["created"],
+            "updated": result["updated"],
+            "start_date": result["start_date"],
+            "end_date": result["end_date"],
+            "currency": currency,
+            "symbols": symbols,
+        })

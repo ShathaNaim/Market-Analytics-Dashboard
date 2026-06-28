@@ -1,6 +1,6 @@
 import json
 import socket
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from decimal import Decimal, InvalidOperation
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
@@ -111,6 +111,91 @@ class MetalPriceService:
             "quota": quota,
         }
 
+    def backfill_historical_prices(self, currency="USD", symbols=None, days=365):
+        currency = currency.strip().upper()
+        days = int(days)
+
+        if days <= 0 or days > 365:
+            raise MetalPriceAPIError("days must be between 1 and 365.")
+
+        assets = Asset.objects.filter(is_active=True)
+
+        if symbols:
+            normalized_symbols = {
+                symbol.strip().upper() for symbol in symbols if symbol.strip()
+            }
+            assets = assets.filter(symbol__in=normalized_symbols)
+
+        assets = list(assets)
+        if not assets:
+            return {
+                "created": 0,
+                "updated": 0,
+                "prices": [],
+                "start_date": None,
+                "end_date": None,
+                "quota": {"current": None, "limit": None},
+            }
+
+        created_count = 0
+        updated_count = 0
+        saved_prices = []
+        latest_quota = {"current": None, "limit": None}
+
+        end_date = datetime.now(timezone.utc).date() - timedelta(days=1)
+        start_date = end_date - timedelta(days=days - 1)
+        current_date = start_date
+
+        while current_date <= end_date:
+            try:
+                payload, latest_quota = self._request_historical(
+                    date=current_date,
+                    currency=currency,
+                    symbols=[asset.symbol for asset in assets],
+                )
+            except MetalPriceAPIError as exc:
+                raise MetalPriceAPIError(
+                    f"Historical request failed for {current_date} "
+                    f"with currency {currency}: {exc}"
+                ) from exc
+
+            rates = payload.get("rates")
+            if not isinstance(rates, dict):
+                raise MetalPriceInvalidResponseError(
+                    "MetalpriceAPI response does not contain a rates object."
+                )
+
+            with transaction.atomic():
+                for asset in assets:
+                    price = self._extract_price(
+                        rates=rates,
+                        currency=currency,
+                        symbol=asset.symbol,
+                    )
+                    market_price, created = MarketPrice.objects.update_or_create(
+                        asset=asset,
+                        currency=currency,
+                        date=current_date,
+                        defaults={
+                            "price": price,
+                            "source": self.SOURCE,
+                        },
+                    )
+                    created_count += int(created)
+                    updated_count += int(not created)
+                    saved_prices.append(market_price)
+
+            current_date += timedelta(days=1)
+
+        return {
+            "created": created_count,
+            "updated": updated_count,
+            "prices": saved_prices,
+            "start_date": start_date,
+            "end_date": end_date,
+            "quota": latest_quota,
+        }
+
     def _request_latest(self, currency, symbols):
         query = urlencode({
             "base": currency,
@@ -118,6 +203,61 @@ class MetalPriceService:
         })
         request = Request(
             f"{self.base_url}/latest?{query}",
+            headers={
+                "X-API-KEY": self.api_key,
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "User-Agent": "MarketDashboard/1.0",
+            },
+        )
+
+        try:
+            with urlopen(request, timeout=self.timeout) as response:
+                raw_body = response.read()
+                quota = {
+                    "current": response.headers.get("X-API-CURRENT"),
+                    "limit": response.headers.get("X-API-QUOTA"),
+                }
+        except HTTPError as exc:
+            payload = self._decode_error_body(exc)
+            self._raise_api_error(payload, http_status=exc.code)
+        except (TimeoutError, socket.timeout) as exc:
+            raise MetalPriceTimeoutError(
+                "MetalpriceAPI request timed out."
+            ) from exc
+        except URLError as exc:
+            if isinstance(exc.reason, (TimeoutError, socket.timeout)):
+                raise MetalPriceTimeoutError(
+                    "MetalpriceAPI request timed out."
+                ) from exc
+            raise MetalPriceAPIError(
+                "Could not connect to MetalpriceAPI."
+            ) from exc
+
+        try:
+            payload = json.loads(raw_body.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise MetalPriceInvalidResponseError(
+                "MetalpriceAPI returned invalid JSON."
+            ) from exc
+
+        if not isinstance(payload, dict):
+            raise MetalPriceInvalidResponseError(
+                "MetalpriceAPI returned an unexpected response."
+            )
+
+        if payload.get("success") is not True:
+            self._raise_api_error(payload)
+
+        return payload, quota
+
+    def _request_historical(self, date, currency, symbols):
+        query = urlencode({
+            "base": currency,
+            "currencies": ",".join(symbols),
+        })
+        request = Request(
+            f"{self.base_url}/{date.isoformat()}?{query}",
             headers={
                 "X-API-KEY": self.api_key,
                 "Accept": "application/json",
