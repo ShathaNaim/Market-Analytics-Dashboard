@@ -1,0 +1,1126 @@
+[
+{
+  "model": "analytics.asset",
+  "pk": 1,
+  "fields": {
+    "symbol": "XAU",
+    "name": "Gold",
+    "unit": "ounce",
+    "is_active": true
+  }
+},
+{
+  "model": "analytics.asset",
+  "pk": 2,
+  "fields": {
+    "symbol": "XAG",
+    "name": "Silver",
+    "unit": "ounce",
+    "is_active": true
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 1,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4108.4685",
+    "date": "2026-06-24",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-25T12:08:00.230Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 2,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "61.7003",
+    "date": "2026-06-24",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-25T12:08:00.236Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 3,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4089.0045",
+    "date": "2026-06-27",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:27:45.723Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 4,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "59.1553",
+    "date": "2026-06-27",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:27:45.727Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 5,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4539.7839",
+    "date": "2026-05-30",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:48.303Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 6,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "75.2859",
+    "date": "2026-05-30",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:48.310Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 7,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4539.2482",
+    "date": "2026-05-31",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:48.690Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 8,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "75.2859",
+    "date": "2026-05-31",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:48.701Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 9,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4540.5343",
+    "date": "2026-06-01",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:49.065Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 10,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "75.6277",
+    "date": "2026-06-01",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:49.069Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 11,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4480.3329",
+    "date": "2026-06-02",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:49.434Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 12,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "74.9111",
+    "date": "2026-06-02",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:49.444Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 13,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4475.6286",
+    "date": "2026-06-03",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:49.809Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 14,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "74.7732",
+    "date": "2026-06-03",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:49.812Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 15,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4455.3571",
+    "date": "2026-06-04",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:50.184Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 16,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "73.1420",
+    "date": "2026-06-04",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:50.188Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 17,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4455.8038",
+    "date": "2026-06-05",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:50.565Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 18,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "73.5104",
+    "date": "2026-06-05",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:50.569Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 19,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4328.7401",
+    "date": "2026-06-06",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:50.940Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 20,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "67.7963",
+    "date": "2026-06-06",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:50.944Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 21,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4328.9987",
+    "date": "2026-06-07",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:51.308Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 22,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "67.7541",
+    "date": "2026-06-07",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:51.311Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 23,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4344.0241",
+    "date": "2026-06-08",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:51.672Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 24,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "68.1012",
+    "date": "2026-06-08",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:51.676Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 25,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4319.5313",
+    "date": "2026-06-09",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:52.041Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 26,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "67.8892",
+    "date": "2026-06-09",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:52.044Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 27,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4218.7578",
+    "date": "2026-06-10",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:52.412Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 28,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "64.8509",
+    "date": "2026-06-10",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:52.416Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 29,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4048.2716",
+    "date": "2026-06-11",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:52.781Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 30,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "62.3725",
+    "date": "2026-06-11",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:52.784Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 31,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4217.1068",
+    "date": "2026-06-12",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:53.161Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 32,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "67.3837",
+    "date": "2026-06-12",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:53.165Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 33,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4219.1049",
+    "date": "2026-06-13",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:53.533Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 34,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "67.9177",
+    "date": "2026-06-13",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:53.537Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 35,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4216.4969",
+    "date": "2026-06-14",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:53.893Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 36,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "68.0167",
+    "date": "2026-06-14",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:53.897Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 37,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4299.8916",
+    "date": "2026-06-15",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:54.258Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 38,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "70.4308",
+    "date": "2026-06-15",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:54.269Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 39,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4315.1324",
+    "date": "2026-06-16",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:54.653Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 40,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "69.8790",
+    "date": "2026-06-16",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:54.657Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 41,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4338.5378",
+    "date": "2026-06-17",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:55.021Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 42,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "70.2376",
+    "date": "2026-06-17",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:55.025Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 43,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4296.4443",
+    "date": "2026-06-18",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:55.387Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 44,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "68.6448",
+    "date": "2026-06-18",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:55.391Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 45,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4193.2343",
+    "date": "2026-06-19",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:55.759Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 46,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "65.3517",
+    "date": "2026-06-19",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:55.764Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 47,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4155.6835",
+    "date": "2026-06-20",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:56.128Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 48,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "64.8414",
+    "date": "2026-06-20",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:56.132Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 49,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4155.6006",
+    "date": "2026-06-21",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:56.519Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 50,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "64.8524",
+    "date": "2026-06-21",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:48:56.523Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 51,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4155.9892",
+    "date": "2026-06-22",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:49:01.490Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 52,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "64.8415",
+    "date": "2026-06-22",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:49:01.501Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 53,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4184.0987",
+    "date": "2026-06-23",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:49:01.868Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 54,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "65.0769",
+    "date": "2026-06-23",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:49:01.875Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 55,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4009.9945",
+    "date": "2026-06-25",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:49:02.648Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 56,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "57.6545",
+    "date": "2026-06-25",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:49:02.652Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 57,
+  "fields": {
+    "asset": 1,
+    "currency": "USD",
+    "price": "4016.1530",
+    "date": "2026-06-26",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:49:03.024Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 58,
+  "fields": {
+    "asset": 2,
+    "currency": "USD",
+    "price": "57.4968",
+    "date": "2026-06-26",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T08:49:03.028Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 59,
+  "fields": {
+    "asset": 1,
+    "currency": "JOD",
+    "price": "2899.1042",
+    "date": "2026-06-27",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:14:11.827Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 60,
+  "fields": {
+    "asset": 2,
+    "currency": "JOD",
+    "price": "41.9411",
+    "date": "2026-06-27",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:14:11.832Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 61,
+  "fields": {
+    "asset": 2,
+    "currency": "JOD",
+    "price": "53.3777",
+    "date": "2026-05-30",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:52.266Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 62,
+  "fields": {
+    "asset": 1,
+    "currency": "JOD",
+    "price": "3218.7068",
+    "date": "2026-05-30",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:52.280Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 63,
+  "fields": {
+    "asset": 2,
+    "currency": "JOD",
+    "price": "53.3777",
+    "date": "2026-05-31",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:52.650Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 64,
+  "fields": {
+    "asset": 1,
+    "currency": "JOD",
+    "price": "3218.3269",
+    "date": "2026-05-31",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:52.653Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 65,
+  "fields": {
+    "asset": 2,
+    "currency": "JOD",
+    "price": "53.6201",
+    "date": "2026-06-01",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:53.022Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 66,
+  "fields": {
+    "asset": 1,
+    "currency": "JOD",
+    "price": "3219.2388",
+    "date": "2026-06-01",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:53.025Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 67,
+  "fields": {
+    "asset": 2,
+    "currency": "JOD",
+    "price": "53.1120",
+    "date": "2026-06-02",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:53.384Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 68,
+  "fields": {
+    "asset": 1,
+    "currency": "JOD",
+    "price": "3176.5560",
+    "date": "2026-06-02",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:53.388Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 69,
+  "fields": {
+    "asset": 2,
+    "currency": "JOD",
+    "price": "53.0142",
+    "date": "2026-06-03",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:53.755Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 70,
+  "fields": {
+    "asset": 1,
+    "currency": "JOD",
+    "price": "3173.2207",
+    "date": "2026-06-03",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:53.765Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 71,
+  "fields": {
+    "asset": 2,
+    "currency": "JOD",
+    "price": "51.8577",
+    "date": "2026-06-04",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:54.139Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 72,
+  "fields": {
+    "asset": 1,
+    "currency": "JOD",
+    "price": "3158.8482",
+    "date": "2026-06-04",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:54.143Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 73,
+  "fields": {
+    "asset": 2,
+    "currency": "JOD",
+    "price": "52.1189",
+    "date": "2026-06-05",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:54.518Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 74,
+  "fields": {
+    "asset": 1,
+    "currency": "JOD",
+    "price": "3159.1649",
+    "date": "2026-06-05",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:54.522Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 75,
+  "fields": {
+    "asset": 2,
+    "currency": "JOD",
+    "price": "48.0676",
+    "date": "2026-06-06",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:54.895Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 76,
+  "fields": {
+    "asset": 1,
+    "currency": "JOD",
+    "price": "3069.0767",
+    "date": "2026-06-06",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:54.899Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 77,
+  "fields": {
+    "asset": 2,
+    "currency": "JOD",
+    "price": "48.0376",
+    "date": "2026-06-07",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:55.264Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 78,
+  "fields": {
+    "asset": 1,
+    "currency": "JOD",
+    "price": "3069.2601",
+    "date": "2026-06-07",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:55.268Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 79,
+  "fields": {
+    "asset": 2,
+    "currency": "JOD",
+    "price": "48.2838",
+    "date": "2026-06-08",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:55.627Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 80,
+  "fields": {
+    "asset": 1,
+    "currency": "JOD",
+    "price": "3079.9131",
+    "date": "2026-06-08",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:55.630Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 81,
+  "fields": {
+    "asset": 2,
+    "currency": "JOD",
+    "price": "48.1334",
+    "date": "2026-06-09",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:56.013Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 82,
+  "fields": {
+    "asset": 1,
+    "currency": "JOD",
+    "price": "3062.5477",
+    "date": "2026-06-09",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:56.017Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 83,
+  "fields": {
+    "asset": 2,
+    "currency": "JOD",
+    "price": "45.9793",
+    "date": "2026-06-10",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:56.372Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 84,
+  "fields": {
+    "asset": 1,
+    "currency": "JOD",
+    "price": "2991.0993",
+    "date": "2026-06-10",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:56.376Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 85,
+  "fields": {
+    "asset": 2,
+    "currency": "JOD",
+    "price": "44.2221",
+    "date": "2026-06-11",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:56.737Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 86,
+  "fields": {
+    "asset": 1,
+    "currency": "JOD",
+    "price": "2870.2246",
+    "date": "2026-06-11",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:56.741Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 87,
+  "fields": {
+    "asset": 2,
+    "currency": "JOD",
+    "price": "47.7751",
+    "date": "2026-06-12",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:57.377Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 88,
+  "fields": {
+    "asset": 1,
+    "currency": "JOD",
+    "price": "2989.9287",
+    "date": "2026-06-12",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:57.381Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 89,
+  "fields": {
+    "asset": 2,
+    "currency": "JOD",
+    "price": "48.1536",
+    "date": "2026-06-13",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:57.753Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 90,
+  "fields": {
+    "asset": 1,
+    "currency": "JOD",
+    "price": "2991.3454",
+    "date": "2026-06-13",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:57.761Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 91,
+  "fields": {
+    "asset": 2,
+    "currency": "JOD",
+    "price": "48.2238",
+    "date": "2026-06-14",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:58.135Z"
+  }
+},
+{
+  "model": "analytics.marketprice",
+  "pk": 92,
+  "fields": {
+    "asset": 1,
+    "currency": "JOD",
+    "price": "2989.4963",
+    "date": "2026-06-14",
+    "source": "MetalpriceAPI",
+    "created_at": "2026-06-28T10:23:58.140Z"
+  }
+}
+]
