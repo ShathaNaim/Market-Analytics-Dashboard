@@ -1,6 +1,6 @@
 import json
 import socket
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 from io import BytesIO
 from unittest.mock import MagicMock, patch
@@ -118,6 +118,34 @@ class MetalPriceServiceTests(TestCase):
             MetalPriceService().refresh_latest_prices()
 
     @patch("analytics.services.metal_price.urlopen")
+    def test_api_quota_message_has_specific_error(self, mocked_urlopen):
+        response = self._response({
+            "success": False,
+            "message": "The free monthly quota has been reached.",
+        })
+        mocked_urlopen.return_value.__enter__.return_value = response
+
+        with self.assertRaises(MetalPriceRateLimitError):
+            MetalPriceService().refresh_latest_prices()
+
+    @patch("analytics.services.metal_price.urlopen")
+    def test_api_request_allowance_message_has_specific_error(
+        self,
+        mocked_urlopen,
+    ):
+        response = self._response({
+            "success": False,
+            "message": (
+                "User has reached or exceeded the monthly API request "
+                "allowance for their subscription plan."
+            ),
+        })
+        mocked_urlopen.return_value.__enter__.return_value = response
+
+        with self.assertRaises(MetalPriceRateLimitError):
+            MetalPriceService().refresh_latest_prices()
+
+    @patch("analytics.services.metal_price.urlopen")
     def test_http_error_includes_provider_message_and_status(
         self,
         mocked_urlopen,
@@ -147,3 +175,138 @@ class MetalPriceServiceTests(TestCase):
             "X-API-QUOTA": "100",
         }
         return response
+
+
+class MarketComparisonViewTests(TestCase):
+    def setUp(self):
+        self.gold = Asset.objects.create(symbol="XAU", name="Gold")
+        self.silver = Asset.objects.create(symbol="XAG", name="Silver")
+        self.platinum = Asset.objects.create(symbol="XPT", name="Platinum")
+        today = datetime.now(timezone.utc).date()
+
+        MarketPrice.objects.create(
+            asset=self.gold,
+            currency="USD",
+            price=Decimal("1000.0000"),
+            date=today - timedelta(days=5),
+        )
+        MarketPrice.objects.create(
+            asset=self.gold,
+            currency="USD",
+            price=Decimal("1100.0000"),
+            date=today,
+        )
+        MarketPrice.objects.create(
+            asset=self.silver,
+            currency="USD",
+            price=Decimal("20.0000"),
+            date=today - timedelta(days=5),
+        )
+        MarketPrice.objects.create(
+            asset=self.silver,
+            currency="USD",
+            price=Decimal("18.0000"),
+            date=today,
+        )
+        MarketPrice.objects.create(
+            asset=self.platinum,
+            currency="EUR",
+            price=Decimal("900.0000"),
+            date=today,
+        )
+
+    def test_market_comparison_returns_summaries_and_history(self):
+        response = self.client.get(
+            "/analytics/market-comparison/",
+            {"symbols": "XAU,XAG", "days": "10", "currency": "usd"},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data["currency"], "USD")
+        self.assertEqual(data["days"], 10)
+        self.assertEqual(
+            [asset["symbol"] for asset in data["assets"]],
+            ["XAG", "XAU"],
+        )
+
+        silver = data["assets"][0]
+        gold = data["assets"][1]
+
+        self.assertEqual(Decimal(str(gold["change_percent"])), Decimal("10.0"))
+        self.assertEqual(Decimal(str(silver["change_percent"])), Decimal("-10.0"))
+        self.assertEqual(len(gold["prices"]), 2)
+        self.assertEqual(
+            Decimal(str(gold["prices"][-1]["normalized_price"])),
+            Decimal("110.0"),
+        )
+
+    def test_market_comparison_rejects_invalid_days(self):
+        response = self.client.get(
+            "/analytics/market-comparison/",
+            {"days": "soon"},
+        )
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json()["error"], "days must be a valid number.")
+
+
+class InsightsViewTests(TestCase):
+    def setUp(self):
+        self.gold = Asset.objects.create(symbol="XAU", name="Gold")
+        self.silver = Asset.objects.create(symbol="XAG", name="Silver")
+        today = datetime.now(timezone.utc).date()
+
+        MarketPrice.objects.create(
+            asset=self.gold,
+            currency="USD",
+            price=Decimal("1000.0000"),
+            date=today - timedelta(days=5),
+        )
+        MarketPrice.objects.create(
+            asset=self.gold,
+            currency="USD",
+            price=Decimal("1120.0000"),
+            date=today,
+        )
+        MarketPrice.objects.create(
+            asset=self.silver,
+            currency="USD",
+            price=Decimal("20.0000"),
+            date=today - timedelta(days=5),
+        )
+        MarketPrice.objects.create(
+            asset=self.silver,
+            currency="USD",
+            price=Decimal("18.0000"),
+            date=today,
+        )
+
+    def test_insights_are_generated_from_market_history(self):
+        response = self.client.get(
+            "/analytics/insights/",
+            {"days": "10", "currency": "USD"},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data["currency"], "USD")
+        self.assertEqual(data["days"], 10)
+        self.assertTrue(data["generated"])
+        self.assertIn(
+            "Gold outperformed Silver",
+            [insight["title"] for insight in data["generated"]],
+        )
+        self.assertIn(
+            "Silver recorded the largest decline",
+            [insight["title"] for insight in data["generated"]],
+        )
+
+    def test_insights_reject_invalid_days(self):
+        response = self.client.get(
+            "/analytics/insights/",
+            {"days": "many"},
+        )
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json()["error"], "days must be a valid number.")

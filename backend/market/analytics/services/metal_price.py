@@ -364,8 +364,17 @@ class MetalPriceService:
             or payload.get("info")
             or "MetalpriceAPI rejected the request."
         )
+        normalized_info = str(info).lower()
 
-        if http_status == 429 or code in self.RATE_LIMIT_CODES:
+        if (
+            http_status == 429
+            or code in self.RATE_LIMIT_CODES
+            or "quota" in normalized_info
+            or "usage limit" in normalized_info
+            or "request allowance" in normalized_info
+            or "subscription plan" in normalized_info
+            or "rate limit" in normalized_info
+        ):
             raise MetalPriceRateLimitError(info)
 
         if http_status:

@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import Filters from "./components/Filters";
+import InsightsPanel from "./components/InsightsPanel";
 import KpiCard from "./components/KpiCard";
 import PriceChart from "./components/PriceChart";
 
@@ -40,6 +42,9 @@ const TROY_OUNCE_GRAMS = 31.1034768;
 const USD_TO_JOD = 0.709;
 
 type DisplayUnit = "ounce" | "gram";
+type ErrorResponse = {
+  error?: string;
+};
 
 function toNumber(value: string | number | null | undefined) {
   const number = Number(value);
@@ -101,6 +106,34 @@ async function getJson<T>(url: string): Promise<T> {
   }
 
   return response.json();
+}
+
+async function refreshErrorMessage(response: Response) {
+  let detail = "";
+
+  try {
+    const body = (await response.json()) as ErrorResponse;
+    detail = body.error || "";
+  } catch {
+    detail = "";
+  }
+
+  const normalizedDetail = detail.toLowerCase();
+  const quotaReached =
+    response.status === 429 ||
+    normalizedDetail.includes("quota") ||
+    normalizedDetail.includes("usage limit") ||
+    normalizedDetail.includes("rate limit");
+
+  if (quotaReached) {
+    return [
+      "Unable to refresh live market data.",
+      "The external MetalpriceAPI monthly request allowance has been reached for this demo.",
+      "Saved historical prices, charts, comparisons, and insights remain available.",
+    ].join("\n");
+  }
+
+  return detail || `Refresh failed with status ${response.status}`;
 }
 
 export default function Home() {
@@ -235,7 +268,7 @@ export default function Home() {
       });
 
       if (!response.ok) {
-        throw new Error(`Refresh failed with status ${response.status}`);
+        throw new Error(await refreshErrorMessage(response));
       }
 
       const sourceCurrency = sourceCurrencyFor(currency);
@@ -271,10 +304,15 @@ export default function Home() {
               Precious Metals Dashboard
             </h1>
           </div>
-          <p className="max-w-xl text-sm leading-6 text-slate-600">
-            Tracking stored prices from your backend history, with daily refresh
-            support for growing the dataset over time.
-          </p>
+          <div className="flex max-w-xl flex-col gap-3 lg:items-end">
+     
+            <Link
+              className="inline-flex h-10 items-center justify-center rounded-md border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-900 transition hover:border-slate-900 hover:bg-slate-100"
+              href="/comparison"
+            >
+              Open Comparison
+            </Link>
+          </div>
         </header>
 
         <Filters
@@ -292,7 +330,7 @@ export default function Home() {
         />
 
         {error ? (
-          <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+          <div className="whitespace-pre-line rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
             {error}
           </div>
         ) : null}
@@ -373,6 +411,8 @@ export default function Home() {
         </section>
 
         <PriceChart data={chartData} currency={currency} unit={unit} />
+
+        <InsightsPanel days={days} currency={sourceCurrencyFor(currency)} />
 
         <section className="rounded-md border border-slate-200 bg-white shadow-sm">
           <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
