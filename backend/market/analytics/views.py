@@ -1,7 +1,8 @@
-from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import BasePermission
+from django.conf import settings
 from .models import Asset, MarketPrice, Insight
 from .serializers import AssetSerializer, MarketPriceSerializer, InsightSerializer
 from rest_framework import generics
@@ -14,10 +15,29 @@ from .services import (
     MetalPriceService,
     MetalPriceTimeoutError,
 )
-# Create your views here.
+def parse_days(value, default=30):
+    try:
+        days = int(value or default)
+    except (TypeError, ValueError):
+        return None, Response(
+            {"error": "days must be a valid number."},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    if days < 1:
+        return None, Response(
+            {"error": "days must be at least 1."},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    return days, None
 
 
-
+class IsAdminUserOrDebug(BasePermission):
+    def has_permission(self, request, view):
+        return settings.DEBUG or bool(
+            request.user and request.user.is_staff
+        )
 
 
 class AssetListView(generics.ListAPIView):
@@ -55,7 +75,11 @@ class PriceHistoryView(APIView):
         currency = request.query_params.get("currency")
 
         if days:
-            start_date = timezone.now().date() - timedelta(days=int(days))
+            parsed_days, error_response = parse_days(days)
+            if error_response:
+                return error_response
+
+            start_date = timezone.now().date() - timedelta(days=parsed_days)
             queryset = queryset.filter(date__gte=start_date)
 
         if currency:
@@ -69,8 +93,11 @@ class PriceHistoryView(APIView):
 
 class MarketOverviewView(APIView):
     def get(self, request):
-        days = int(request.query_params.get("days", 30))
-        currency = request.query_params.get("currency", "USD")
+        days, error_response = parse_days(request.query_params.get("days"), 30)
+        if error_response:
+            return error_response
+
+        currency = request.query_params.get("currency", "USD").strip().upper()
 
         start_date = timezone.now().date() - timedelta(days=days)
 
@@ -115,19 +142,9 @@ class MarketOverviewView(APIView):
 
 class MarketComparisonView(APIView):
     def get(self, request):
-        try:
-            days = int(request.query_params.get("days", 30))
-        except ValueError:
-            return Response(
-                {"error": "days must be a valid number."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        if days < 1:
-            return Response(
-                {"error": "days must be at least 1."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+        days, error_response = parse_days(request.query_params.get("days"), 30)
+        if error_response:
+            return error_response
 
         currency = request.query_params.get("currency", "USD").strip().upper()
         symbols = request.query_params.get("symbols")
@@ -201,19 +218,9 @@ class MarketComparisonView(APIView):
 
 class InsightsView(APIView):
     def get(self, request, format=None):
-        try:
-            days = int(request.query_params.get("days", 30))
-        except ValueError:
-            return Response(
-                {"error": "days must be a valid number."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        if days < 1:
-            return Response(
-                {"error": "days must be at least 1."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+        days, error_response = parse_days(request.query_params.get("days"), 30)
+        if error_response:
+            return error_response
 
         currency = request.query_params.get("currency", "USD").strip().upper()
         start_date = timezone.now().date() - timedelta(days=days)
@@ -351,8 +358,10 @@ class InsightsView(APIView):
         }, status=status.HTTP_200_OK)
 
 class RefreshMarketDataView(APIView):
+    permission_classes = [IsAdminUserOrDebug]
+
     def post(self, request, format=None):
-        currency = request.data.get("currency", "USD")
+        currency = request.data.get("currency", "USD").strip().upper()
         symbols = request.data.get("symbols")
 
         if symbols is not None and not isinstance(symbols, list):
@@ -397,8 +406,10 @@ class RefreshMarketDataView(APIView):
         )
 
 class BackfillMarketHistoryView(APIView):
+    permission_classes = [IsAdminUserOrDebug]
+
     def post(self, request, format=None):
-        currency = request.data.get("currency", "USD")
+        currency = request.data.get("currency", "USD").strip().upper()
         symbols = request.data.get("symbols")
         days = request.data.get("days", 29)
 

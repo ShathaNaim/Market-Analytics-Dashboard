@@ -526,7 +526,6 @@ export default function ComparisonPage() {
               >
                 <option value="USD">USD</option>
                 <option value="JOD">JOD</option>
-                <option value="EUR">EUR</option>
               </select>
             </label>
 

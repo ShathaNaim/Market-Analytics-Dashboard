@@ -40,6 +40,10 @@ const defaultCurrency = "USD";
 const defaultDays = 29;
 const TROY_OUNCE_GRAMS = 31.1034768;
 const USD_TO_JOD = 0.709;
+const enableMarketRefresh =
+  process.env.NEXT_PUBLIC_ENABLE_MARKET_REFRESH === undefined
+    ? process.env.NODE_ENV !== "production"
+    : process.env.NEXT_PUBLIC_ENABLE_MARKET_REFRESH === "true";
 
 type DisplayUnit = "ounce" | "gram";
 type ErrorResponse = {
@@ -262,7 +266,7 @@ export default function Home() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          currency,
+          currency: sourceCurrencyFor(currency),
           symbols: selectedSymbol ? [selectedSymbol] : undefined,
         }),
       });
@@ -325,7 +329,7 @@ export default function Home() {
           onDaysChange={setDays}
           onCurrencyChange={setCurrency}
           onUnitChange={setUnit}
-          onRefresh={refreshPrices}
+          onRefresh={enableMarketRefresh ? refreshPrices : undefined}
           loading={refreshing || loading || !selectedSymbol}
         />
 

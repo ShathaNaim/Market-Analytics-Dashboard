@@ -13,12 +13,12 @@ type FiltersProps = {
   onDaysChange: (days: number) => void;
   onCurrencyChange: (currency: string) => void;
   onUnitChange: (unit: "ounce" | "gram") => void;
-  onRefresh: () => void;
+  onRefresh?: () => void;
   loading?: boolean;
 };
 
 const dayOptions = [7, 29, 60, 90, 180, 365];
-const currencyOptions = ["USD", "JOD", "EUR"];
+const currencyOptions = ["USD", "JOD"];
 
 export default function Filters({
   assets,
@@ -94,14 +94,16 @@ export default function Filters({
         </select>
       </label>
 
-      <button
-        className="h-10 rounded-md bg-slate-900 px-4 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:bg-slate-400"
-        type="button"
-        onClick={onRefresh}
-        disabled={loading}
-      >
-        Refresh
-      </button>
+      {onRefresh ? (
+        <button
+          className="h-10 rounded-md bg-slate-900 px-4 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:bg-slate-400"
+          type="button"
+          onClick={onRefresh}
+          disabled={loading}
+        >
+          Refresh
+        </button>
+      ) : null}
     </div>
   );
 }

@@ -310,3 +310,37 @@ class InsightsViewTests(TestCase):
 
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json()["error"], "days must be a valid number.")
+
+
+class RefreshMarketDataViewPermissionTests(TestCase):
+    @override_settings(DEBUG=True)
+    @patch("analytics.views.MetalPriceService")
+    def test_refresh_is_available_in_local_debug(
+        self,
+        mocked_service_class,
+    ):
+        service = mocked_service_class.return_value
+        service.refresh_latest_prices.return_value = {
+            "created": 0,
+            "updated": 0,
+            "prices": [],
+            "quota": {"current": None, "limit": None},
+        }
+
+        response = self.client.post(
+            "/analytics/refresh/",
+            data={"currency": "USD", "symbols": []},
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 200)
+
+    @override_settings(DEBUG=False)
+    def test_refresh_requires_admin_outside_debug(self):
+        response = self.client.post(
+            "/analytics/refresh/",
+            data={"currency": "USD", "symbols": []},
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 403)
