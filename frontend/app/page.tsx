@@ -307,6 +307,9 @@ export default function Home() {
             <h1 className="mt-2 text-3xl font-bold text-slate-950">
               Precious Metals Dashboard
             </h1>
+            <p className="mt-2 text-sm text-slate-500">
+              Saved history controls available ranges; free API limits can delay new data.
+            </p>
           </div>
           <div className="flex max-w-xl flex-col gap-3 lg:items-end">
      

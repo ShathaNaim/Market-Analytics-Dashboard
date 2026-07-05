@@ -17,7 +17,7 @@ type FiltersProps = {
   loading?: boolean;
 };
 
-const dayOptions = [7, 29, 60, 90, 180, 365];
+const dayOptions = [29];
 const currencyOptions = ["USD", "JOD"];
 
 export default function Filters({

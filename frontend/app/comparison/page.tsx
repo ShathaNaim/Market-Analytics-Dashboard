@@ -44,6 +44,7 @@ type DisplayUnit = "ounce" | "gram";
 
 const defaultCurrency = "USD";
 const defaultDays = 29;
+const dayOptions = [29];
 const TROY_OUNCE_GRAMS = 31.1034768;
 const USD_TO_JOD = 0.709;
 const chartWidth = 900;
@@ -480,6 +481,9 @@ export default function ComparisonPage() {
             <h1 className="mt-2 text-3xl font-bold text-slate-950">
               Market Comparison
             </h1>
+            <p className="mt-2 text-sm text-slate-500">
+              Saved history controls available ranges; free API limits can delay new data.
+            </p>
           </div>
           <div className="flex max-w-xl flex-col gap-3 lg:items-end">
        
@@ -548,7 +552,7 @@ export default function ComparisonPage() {
                 value={days}
                 onChange={(event) => setDays(Number(event.target.value))}
               >
-                {[7, 29, 60, 90, 180, 365].map((option) => (
+                {dayOptions.map((option) => (
                   <option key={option} value={option}>
                     {option} days
                   </option>
