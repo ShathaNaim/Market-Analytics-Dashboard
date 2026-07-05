@@ -29,5 +29,8 @@ frontend/         Next.js frontend app
 
 Historical ranges are based on saved database prices. If the free MetalpriceAPI limit is reached, refresh may not add new data until the API allowance resets.
 
+<img width="573" height="536" alt="image" src="https://github.com/user-attachments/assets/885baa7b-1da6-4dce-97f6-e0afd92a5a47" />
+
+<img width="573" height="536" alt="image" src="https://github.com/user-attachments/assets/0f0cc78b-fdc8-452c-9fa9-92b9b26cf9b2" />
 
 
